@@ -1,0 +1,27 @@
+library ieee; 
+use ieee.std_logic_1164.all; 
+
+ENTITY 2partial IS 
+PORT(
+	e,clk, reset: IN STD_LOGIC; 
+	f: OUT STD_LOGIC
+); 
+END partial2; 
+
+ARCHITECTURE edge_detector OF 2partial IS
+	SIGNAL q0,q1: STD_LOGIC; 
+BEGIN
+	PROCESS(clk, reset)
+	BEGIN
+	IF reset = '0' THEN	
+		q0 <= '0'; 
+		q1 <= '0';
+	ELSIF rising_edge(clk) THEN 
+		q0 <= e; 
+		q1 <= q0;
+	END IF; 
+	
+	f <= q0 AND NOT q1;
+	END PROCESS; 
+	
+END edge_detector; 
